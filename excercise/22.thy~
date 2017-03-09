@@ -1,0 +1,28 @@
+theory 22
+imports Main
+begin
+fun add :: "nat \<Rightarrow> nat \<Rightarrow> nat" where
+  "add 0 n = n" |
+  "add (Suc m) n = Suc(add m n)"
+lemma add_02: "add m 0 = m"
+  apply(induction m)
+  apply(auto)
+  done
+thm add_02
+
+lemma add_associative: "add(add n m) z = add n (add m z)"
+  apply(induction n)
+  apply(auto)
+  done
+thm add_associative
+  
+lemma add_commutative: "add m n = add n m"
+  
+  apply(induction n)
+  apply(induction m)
+  apply(auto)
+  done
+    
+ 
+end
+  
