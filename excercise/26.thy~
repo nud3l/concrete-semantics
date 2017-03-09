@@ -15,14 +15,11 @@ value "listsum([1,2,3]) = 6"
   
 value "listsum([]) = 0"
   
-    
   
 lemma "treesum t = listsum(contents t)"
   apply(induction t)
-   apply(auto)
-    done
-    
-  
+  apply(auto)
+  done
   
   
 end
