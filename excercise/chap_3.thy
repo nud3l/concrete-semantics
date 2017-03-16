@@ -159,7 +159,27 @@ fun aval2 :: "aexp2 \<Rightarrow> state \<Rightarrow> (val \<times> state) optio
    (if fst q = 0 then 
     None 
    else Some ((fst p div fst q), (\<lambda>x.((snd p) x) + ((snd q) x) - (s x)))))"
- 
+
+(* 3.6 *)
+
+datatype lexp = Nl int | Vl vname | Plusl lexp lexp | LET vname lexp lexp
+
+fun lval :: "lexp \<Rightarrow> state \<Rightarrow> int" where
+"lval (Nl a) s = a" |
+"lval (Vl x) s = s x" |
+"lval (Plusl p q) s = lval p s + lval q s" |
+"lval (LET x a e) s = lval e (s(x:=lval a s))"
+
+fun inline :: "lexp \<Rightarrow> aexp" where
+"inline (Nl a) = (N a)" |
+"inline (Vl x) = (V x)" |
+"inline (Plusl p q) = Plus (inline p) (inline q)" |
+"inline (LET x a e) = subst x (inline a) (inline e)"  
+
+theorem "aval (inline e) s = lval e s"
+apply (induction e arbitrary:s)
+apply (auto)
+done
   
 end
   
